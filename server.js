@@ -10,10 +10,11 @@ dotenv.config();
 const connection = require('./connection')
 const userRoutes = require('./routes/userRoutes');
 
-
-app.use('/api/users', userRoutes);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads',express.static('uploads'))
+app.use('/api/users', userRoutes);
+
 
 
 
