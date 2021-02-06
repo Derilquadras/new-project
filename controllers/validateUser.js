@@ -5,11 +5,11 @@ const registerValidation = (data) => {
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
-    profilePicture: Joi.string().required(),
-    phoneNumber: Joi.number().min(10).required(),
-    skills: Joi.string().required(),
+    phoneNumber: Joi.number().min(5).required(),
+    skills: Joi.required(),
     role: Joi.string().required(),
-    ative: Joi.boolean().required(),
+    active: Joi.boolean().required(),
+    description: Joi.string().required(),
   });
   return schema.validate(data);
 };
