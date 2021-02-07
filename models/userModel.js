@@ -26,9 +26,12 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
   skills: {
-    type: [String],
-    //enum: ["nodejs", "angularjs"],
-    //required: true,
+    type: Array,
+    items: {
+      type: String,
+      //enum: ["value1","value2","value3"]
+    },
+    uniqueItems: true,
   },
 
   role: {

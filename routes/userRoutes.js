@@ -8,6 +8,7 @@ const {
   deactivate,
   getOne,
   Search,
+  chartData,
 } = require("../controllers/admincontroller");
 const { Register, Login } = require("../controllers/userController");
 
@@ -16,7 +17,7 @@ const upload = require("../middleware/multerUpload");
 
 router.post("/login", Login);
 router.post("/register", upload.single("profilePicture"), Register);
-
+router.get("/dashboard", chartData);
 router.use(verify.protect);
 
 // Only admin have permission to access for the below APIs

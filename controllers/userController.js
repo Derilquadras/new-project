@@ -5,7 +5,12 @@ const {
   registerValidation,
   loginValidation,
 } = require("../controllers/validateUser");
-
+/**
+ * User Registration
+ * @param {*} req
+ * @param {*} res
+ * @description To register a user
+ */
 exports.Register = async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -36,7 +41,12 @@ exports.Register = async (req, res) => {
     res.status(400).send({ message: err });
   }
 };
-
+/**
+ * User Login
+ * @param {*} req
+ * @param {*} res
+ * @description login for a user
+ */
 exports.Login = async (req, res) => {
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);

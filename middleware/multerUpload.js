@@ -1,6 +1,5 @@
 const multer = require("multer");
 const fs = require("fs");
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
@@ -17,7 +16,6 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-
 const upload = multer({
   storage: storage,
   limits: {
@@ -25,5 +23,4 @@ const upload = multer({
   },
   fileFilter: fileFilter,
 });
-
 module.exports = upload;
