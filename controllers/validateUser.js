@@ -7,8 +7,8 @@ const registerValidation = data =>{
         email:Joi.string().email().required(),
         password:Joi.string().min(6).required(),
         profilePicture:Joi.string(),
-        phoneNumber:Joi.number().min(10),
-        skills:Joi.string(),
+        phoneNumber:Joi.string().trim().regex(/^[0-9]{7,10}$/).required(),
+        skills:Joi.array().items(Joi.string().valid("node.js", "mongodb", "vue.js", "c","SQL")),
         role:Joi.string(),
         active:Joi.boolean(),
         description:Joi.string()

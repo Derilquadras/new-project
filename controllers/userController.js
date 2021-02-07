@@ -23,7 +23,7 @@ exports.login =  async(req,res)=>{
 
     //create and assign a token
     const token = jwt.sign({_id: user._id },process.env.TOKEN_SECRET,{expiresIn:"3d"})
-    res.header('auth-token',token).status(200).send(`${token} loggen in successfully`)
+    res.header('authorization',token).status(200).send(`${token} loggen in successfully`)
  
 }
 
@@ -40,7 +40,7 @@ exports.register = async(req,res)=>{
        const salt = await bcrypt.genSalt(10)
        const hashedPassword = await bcrypt.hash(req.body.password, salt)
    
-   
+
        const user =  new UserSchema({
                name:req.body.name,
                email:req.body.email,

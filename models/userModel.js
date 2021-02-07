@@ -5,7 +5,7 @@ const UserSchema = mongoose.Schema({
 
       name: {
         type: String,
-        required: true
+        required: true,
       },
       email: {
         type: String,
@@ -32,7 +32,14 @@ const UserSchema = mongoose.Schema({
 
       },
       skills:{
-          type:[String]
+
+          type: Array,
+          items: {
+            type: String,
+            //enum: ["value1","value2","value3"]
+          },
+          uniqueItems: true
+
 
       },
 

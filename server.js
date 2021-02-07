@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const port = process.env.PORT || 3000;
 
 dotenv.config();
+app.set('view engine', 'ejs');
 
 
 const connection = require('./connection')
