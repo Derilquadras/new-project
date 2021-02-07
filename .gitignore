@@ -6,4 +6,4 @@ node_modules/
 *.mov
 *.wmv
 *.env
-uploads/
+uploads
