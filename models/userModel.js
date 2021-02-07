@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-
+const Joi = require('@hapi/joi');
 
 const UserSchema = mongoose.Schema({
 
       name: {
         type: String,
-        required: true
+        required: true,
       },
       email: {
         type: String,
@@ -20,19 +20,26 @@ const UserSchema = mongoose.Schema({
       },
       profilePicture: {
         type: String,
-        required: true, 
         minLength: 6,
 
       },
       phoneNumber:{
           type:Number,
+          unique:true,
           required:true,
           min:10,
-          max:10
+    
 
       },
       skills:{
-          type:[String]
+
+          type: Array,
+          items: {
+            type: String,
+            //enum: ["value1","value2","value3"]
+          },
+          uniqueItems: true
+
 
       },
 
@@ -51,6 +58,9 @@ const UserSchema = mongoose.Schema({
       }
     });
 
+
+    
+        
 
 module.exports = mongoose.model('user', UserSchema);
     

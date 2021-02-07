@@ -5,15 +5,17 @@ const dotenv = require('dotenv')
 const port = process.env.PORT || 3000;
 
 dotenv.config();
+app.set('view engine', 'ejs');
 
 
 const connection = require('./connection')
 const userRoutes = require('./routes/userRoutes');
 
-
-app.use('/api/users', userRoutes);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads',express.static('uploads'))
+app.use('/api/users', userRoutes);
+
 
 
 
