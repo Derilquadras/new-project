@@ -1,60 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | dashboard</title>
-</head>
- <style>
-body {font-family: Lato;
-font-weight: 10px ;}
-</style>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin | dashboard</title>
+    </head>
+     <style>
+    body {font-family: Lato;
+    font-weight: 10px ;}
+  </style>
 </head>
 <body>
-<canvas id="myChart"></canvas>
-
-<!-- Start Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-let ctx = document.querySelector('#myChart').getContext('2d');
-let myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ["Node.js", "mongodb","vue.js","c","sql"],
-    datasets: [{
-      label: '#',
-      data: ["<%= node %>", "<%= mongodb %>","<%= vue %>","<%= c %>","<%= sql %>"],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        '#ffb4b4',
-        '#d3e0ea'
-         ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        '#ff9292',
-        '#1687a7'
-    ],
-      borderWidth: 2
-    }]
- },
- options: {
-     scales: {
-         yAxes: [{
-             ticks: {
-                 beginAtZero:true
-             }
-         }]
+  <canvas id="myChart"></canvas>
+  
+  <!-- Start Js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script>
+    let ctx = document.querySelector('#myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ["Node.js", "mongodb","vue.js","c","sql"],
+        datasets: [{
+          label: '#',
+          data: ["<%= node %>", "<%= mongodb %>","<%= vue %>","<%= c %>","<%= sql %>"],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            '#ffb4b4',
+            '#d3e0ea'
+             ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            '#ff9292',
+            '#1687a7'
+        ],
+          borderWidth: 2
+        }]
      },
-     title: {
-        display: true,
-        text: 'Number of users based on their skills',
-        fontSize: 18
-    }
- }
-}); // end chart obj
-</script>
+     options: {
+         scales: {
+             yAxes: [{
+                 ticks: {
+                     beginAtZero:true
+                 }
+             }]
+         },
+         title: {
+            display: true,
+            text: 'Number of users based on their skills',
+            fontSize: 18
+        }
+     }
+    }); // end chart obj
+  </script>
 </body>
-</html>
+    </html>

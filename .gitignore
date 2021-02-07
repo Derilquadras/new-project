@@ -1,2 +1,9 @@
 node_modules/
+*.mp4
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+*.env
 uploads/
