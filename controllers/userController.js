@@ -6,7 +6,12 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 
-
+/**
+ * User login
+ * @param {*} req
+ * @param {*} res
+ * @description login for a user/admin
+ */
 
 exports.login =  async(req,res)=>{
 
@@ -27,6 +32,12 @@ exports.login =  async(req,res)=>{
  
 }
 
+/**
+ * User register
+ * @param {*} req
+ * @param {*} res
+ * @description register for a user/admin
+ */
 exports.register = async(req,res)=>{
 
     const {error} = registerValidation(req.body);

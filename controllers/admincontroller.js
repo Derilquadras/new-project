@@ -2,9 +2,13 @@ const UserSchema= require('../models/userModel')
 const {registerValidation, loginValidation} = require('../controllers/validateUser')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { on } = require('../models/userModel')
-//const { catch } = require('../connection')
 
+/**
+ * User Registration
+ * @param {*} req
+ * @param {*} res
+ * @description To register a user
+ */
 exports.createOne = async(req,res)=>{
 
     const {error} = registerValidation(req.body);
@@ -40,7 +44,13 @@ exports.createOne = async(req,res)=>{
    
        }
    }
-   
+ 
+/**
+ * Get all users
+ * @param {*} req
+ * @param {*} res
+ * @description To view all the users, restricted only for admin
+ */   
 exports.getAll = async (req,res)=>{
        try{
             const { page = 1, limit = 10 } = req.query;
@@ -75,6 +85,12 @@ exports.getAll = async (req,res)=>{
     }
 };
 
+/**
+ * search for a user
+ * @param {*} req
+ * @param {*} res
+ * @description search for user using _id, this action is restricted to admin only
+ */
 
 exports.searchUser = async(req,res)=>{
     try{
@@ -100,14 +116,17 @@ exports.searchUser = async(req,res)=>{
     }
 }
 
+/**
+ * Get chart data based on skills of user
+ * @param {*} req
+ * @param {*} res
+ * @description It is graphical representation of number users having paticular skills namely,"Node.js", "mongodb","vue.js","c","sql", This action just restricted to admin.
+ */
+
+
 exports.chartData = async (req,res)=>{
     try{
-        //const doc = await UserSchema.find().select('-_id skills ')
         const doc = await UserSchema.find()
-        
-        //const hasAdmin = doc.map(user => user.skillfilter((us)=>us=="node.js"))
-        // const hasAdmin = doc.map(ob =>ob.skills).filter(us=>us=="node.js")
-        
         const node = doc.filter((item) => {
             const filter = 'node.js';
             return (item.skills.indexOf(filter) >= 0);
