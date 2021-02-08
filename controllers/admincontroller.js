@@ -4,8 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 /**
  * Get all users
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description To get all users(Admin)
  */
 exports.getAll = async (req, res) => {
@@ -32,8 +32,8 @@ exports.getAll = async (req, res) => {
 };
 /**
  * Get get one user
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description To get one user based on name(Admin)
  */
 exports.getOne = async (req, res) => {
@@ -41,15 +41,15 @@ exports.getOne = async (req, res) => {
     const user = await UserSchema.find({ _id: req.params.id });
     if (user.length == 0)
       return res.status(400).send({ message: "Object not found" });
-    res.status(200).json(user);
+    res.status(200).json({ status: "success", data: user });
   } catch (err) {
     res.status(400).send({ message: err });
   }
 };
 /**
  * Create a user
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description To create new user through admin(Admin)
  */
 exports.createOne = async (req, res) => {
@@ -63,29 +63,28 @@ exports.createOne = async (req, res) => {
   //hash the password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-  const user = new UserSchema({
-    name: req.body.name,
-    email: req.body.email,
-    password: hashedPassword,
-    profilePicture: req.file.path,
-    phoneNumber: req.body.phoneNumber,
-    skills: req.body.skills,
-    role: req.body.role,
-    active: req.body.active,
-    description: req.body.description,
-  });
   try {
-    const savedusers = await user.save();
-    res.status(200).json(savedusers);
+    const user = new UserSchema({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+      profilePicture: req.file.path,
+      phoneNumber: req.body.phoneNumber,
+      skills: req.body.skills,
+      role: req.body.role,
+      active: req.body.active,
+      description: req.body.description,
+    });
+    user.password = undefined;
+    res.status(200).json({ status: "success", user });
   } catch (err) {
     res.status(400).send({ message: err });
   }
 };
 /**
  * Search a user
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description Search a user based on name(Admin)
  */
 exports.Search = async (req, res) => {
@@ -99,14 +98,7 @@ exports.Search = async (req, res) => {
       .skip((page - 1) * limit);
 
     res.status(200).json({
-      status: "success",
-      data: {
-        limit: limit,
-        count: UserSchema.length,
-        users,
-        totalPages: Math.ceil(count / limit),
-        currentPage: page,
-      },
+      data: users,
     });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -114,8 +106,8 @@ exports.Search = async (req, res) => {
 };
 /**
  * Delete a user
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description To deactivate users account(Admin)
  */
 exports.deactivate = async (req, res) => {
@@ -124,7 +116,7 @@ exports.deactivate = async (req, res) => {
       active: false,
     });
 
-    res.status(204).json({
+    res.status(200).json({
       status: "success",
       data: null,
     });
@@ -135,8 +127,8 @@ exports.deactivate = async (req, res) => {
 
 /**
  * Dashboard for admin
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description To display a chart based on skills(Admin)
  */
 exports.chartData = async (req, res) => {
@@ -168,21 +160,23 @@ exports.chartData = async (req, res) => {
       return item.skills.indexOf(filter) >= 0;
     });
 
-    //    res.status(200).json({
-    //     status:'success',data:{
-    //         node :node.length,
-    //         mongodb: mongodb.length,
-    //         vue:vue.length,
-    //         c:c.length,
-    //         sql:sql.length
-    // }})
-    res.render("dashboard", {
-      node: node.length,
-      mongodb: mongodb.length,
-      vue: vue.length,
-      c: c.length,
-      sql: sql.length,
+    res.status(200).json({
+      status: "success",
+      data: {
+        node: node.length,
+        mongodb: mongodb.length,
+        vue: vue.length,
+        c: c.length,
+        sql: sql.length,
+      },
     });
+    // res.render("dashboard", {
+    //   node: node.length,
+    //   mongodb: mongodb.length,
+    //   vue: vue.length,
+    //   c: c.length,
+    //   sql: sql.length,
+    // });
   } catch (error) {
     console.log(error);
   }

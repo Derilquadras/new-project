@@ -5,6 +5,7 @@ const registerValidation = (data) => {
     name: Joi.string().required().min(3).max(30),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
+    profilePicture: Joi.string(),
     phoneNumber: Joi.number().min(5).required(),
     skills: Joi.array().items(
       Joi.string().valid("node.js", "mongodb", "vue.js", "c", "SQL")

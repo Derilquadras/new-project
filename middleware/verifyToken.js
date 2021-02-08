@@ -1,6 +1,12 @@
 const jwt = require("jsonwebtoken");
 const UserSchema = require("../models/userModel");
-
+/**
+ * Authorization
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @description To protect the routes with a token(Admin)
+ */
 exports.protect = async (req, res, next) => {
   try {
     // 1) check if the token is there
@@ -32,7 +38,11 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-// Authorization check if the user have rights to do this action
+/**
+ * Restriction
+ * @param {*} roles
+ * @description Authorization check if the user have rights to do this action
+ */
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

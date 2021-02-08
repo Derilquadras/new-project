@@ -30,6 +30,7 @@ router.route("/search").get(Search);
 router.route("/:id").get(getOne);
 
 router.delete("/:id", deactivate);
+
 router.use(verify.restrictTo("admin"));
 
 module.exports = router;

@@ -7,8 +7,8 @@ const {
 } = require("../controllers/validateUser");
 /**
  * User Registration
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description To register a user
  */
 exports.Register = async (req, res) => {
@@ -22,29 +22,29 @@ exports.Register = async (req, res) => {
   //hash the password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-  const user = new UserSchema({
-    name: req.body.name,
-    email: req.body.email,
-    password: hashedPassword,
-    profilePicture: req.file.path,
-    phoneNumber: req.body.phoneNumber,
-    skills: req.body.skills,
-    role: req.body.role,
-    active: req.body.active,
-    description: req.body.description,
-  });
   try {
-    const savedusers = await user.save();
-    res.status(200).json(savedusers);
+    const user = new UserSchema({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+      profilePicture: req.file.path,
+      phoneNumber: req.body.phoneNumber,
+      skills: req.body.skills,
+      role: req.body.role,
+      active: req.body.active,
+      description: req.body.description,
+    });
+    user.password = undefined;
+
+    res.status(200).json({ status: "success", user });
   } catch (err) {
     res.status(400).send({ message: err });
   }
 };
 /**
  * User Login
- * @param {*} req
- * @param {*} res
+ * @param {import('express').Request<{}, {}, showRequestBody, showRequestQuery>} req
+ * @param {import('express').Response} res
  * @description login for a user
  */
 exports.Login = async (req, res) => {
@@ -63,8 +63,9 @@ exports.Login = async (req, res) => {
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
     expiresIn: "3d",
   });
+  //const userdb = await userdata.find();
   res
     .header("auth-token", token)
     .status(200)
-    .send(`${token} loggen in successfully`);
+    .json({ Token: token, message: "Logged in Successfully " });
 };
