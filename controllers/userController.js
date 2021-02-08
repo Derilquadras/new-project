@@ -63,9 +63,18 @@ exports.Login = async (req, res) => {
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
     expiresIn: "3d",
   });
-  //const userdb = await userdata.find();
   res
     .header("auth-token", token)
     .status(200)
-    .json({ Token: token, message: "Logged in Successfully " });
+    .json({
+      Token: token,
+      message: "Logged in Successfully ",
+      data: {
+        Agreeableness: 13.333333333333334,
+        Drive: 21.666666666666668,
+        Luck: 10,
+        Openess: 30,
+      },
+      type: "bar",
+    });
 };

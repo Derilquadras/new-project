@@ -17,6 +17,15 @@ const upload = require("../middleware/multerUpload");
 
 router.post("/login", Login);
 router.post("/register", upload.single("profilePicture"), Register);
+// router.post("/abc", async (req, res) => {
+//   const user = new UserCSchema({
+//     Agreeableness: req.body.Agreeableness,
+//     Drive: req.body.Drive,
+//     Luck: req.body.Luck,
+//     Openess: req.body.Openess,
+//   });
+//   res.status(200).json({ status: "success", user });
+// });
 router.get("/dashboard", chartData);
 router.use(verify.protect);
 
