@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>API Documentation</h1>
+    <h3>Available Routes</h3>
+
+    <h4>Role User</h4>
+    <ul>
+        <li>POST /api/users/register</li>
+        <li>POST /api/users/login</li>
+    </ul>
+    <h4>Role Admin</h4>
+    <ul>
+        <li>POST /api/users/</li>
+        <li>GET /api/users/</li>
+        <li>GET /api/users/:id</li>
+        <li>GET /api/users/search</li>
+        <li>DELETE /api/users/:id</li>
+        <li>GET /api/users/dashboard</li>
+    </ul>
+
+    **cors is allowed for http://localhost:4200
+
+    <h3>Instructions</h3>
+    <h4>Register</h4>
+    <p>On the /api/users/register route you need to enter your details and register yourself and set your role. <br>
+        Based on the role we will be getting access to the api's.
+        <br>
+        Fields for registration are : Name, Email,Password,Profile Picture,Description,Role,Skills
+        **All data needs to be filled in form-data
+    </p>
+    <br>Request:<br>
+    {
+    "email": "abc@gmail.com",
+    "name": "abc",
+    "password": "abc123",
+    "profilePicture": "uploads\\2021-02-09T05-14:12.046Z",
+    "role": "user",
+    "active": true,
+    "_id": "60221a2404abaf3dd8520159",
+    "phoneNumber": 900000,
+    "skills[]": "vue.js",
+    "skills[]": "node.js",
+    "description": "i am a mean stack developer"
+    }
+    <br>Response:<br>
+    {
+    "status": "success",
+    "user": {
+    "skills": [
+    "vue.js",
+    "node.js"
+    ],
+    "role": "user",
+    "active": true,
+    "_id": "60221a2404abaf3dd8520159",
+    "name": "bhooth",
+    "email": "bhooth@gmail.com",
+    "profilePicture": "uploads\\2021-02-09T05-14:12.046Z",
+    "phoneNumber": 900000,
+    "description": "i am a mean stack developer"
+    }
+    }
+    <h4>Login</h4>
+    <p>On the /api/users/login route you will receive user insights including a token. <br>
+        To Authorize your request with the token you received on login, add the X-Token header to any request that
+        should be authorized.
+        The value of the X-Token header is Baerer and
+        the token value you received on login.
+
+        <br>
+    </p>
+    <br>Request:<br>
+    {
+    "email": "newuser1@gmail.com",
+    "password":"123456"
+    }
+    <br>Response:<br>
+    {
+    "Token":
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDIxMWNiMTI0OGIxMTA3NzQ4NjI5MjMiLCJpYXQiOjE2MTI4NDg0MzcsImV4cCI6MTYxMzEwNzYzN30.qa_RCdN-Aran49yJjocXZhHB9XKTQ8_Hmn5MrU8BViA",
+    "message": "Logged in Successfully ",
+    "data": {
+    "Agreeableness": 13.333333333333334,
+    "Drive": 21.666666666666668,
+    "Luck": 10,
+    "Openess": 30
+    },
+    "type": "bar"
+    }
+    <h4>Dashboard</h4>
+
+    <p>On the /api/users/dashboard Admin should be presented with a dashboard where he sees all users skills reports.
+        <br>
+        User reports will be displayed while he logs in using his credentials in /api/users/login route.
+    </p>
+    Response:<br>
+    [
+    {
+    "status": "success",
+    "data": {
+    "node": 3,
+    "mongodb": 1,
+    "vue": 5,
+    "c": 0,
+    "sql": 0
+    }
+    }]
+    <h4>Admin Create User</h4>
+    <p>On the /api/users/ route you need to enter your details and register yourself and set your role. <br>
+        Based on the role we will be getting access to the api's.
+        <br>
+        Fields for registration are : Name, Email,Password,Profile Picture,Description,Role,Skills
+        **All data needs to be filled in form-data and only admin has access to this route
+    </p>
+    <br>Request:<br>
+    {
+    "email": "abc@gmail.com",
+    "name": "abc",
+    "password": "abc123",
+    "profilePicture": "uploads\\2021-02-09T05-14:12.046Z",
+    "role": "admin",
+    "active": true,
+    "_id": "60221a2404abaf3dd8520159",
+    "phoneNumber": 900000,
+    "skills[]": "vue.js",
+    "skills[]": "node.js",
+    "description": "i am a mean stack developer"
+    }
+    <br>Response:<br>
+    {
+    "status": "success",
+    "user": {
+    "skills": [
+    "vue.js",
+    "node.js"
+    ],
+    "role": "admin",
+    "active": true,
+    "_id": "60221a2404abaf3dd8520159",
+    "name": "bhooth",
+    "email": "bhooth@gmail.com",
+    "profilePicture": "uploads\\2021-02-09T05-14:12.046Z",
+    "phoneNumber": 900000,
+    "description": "i am a mean stack developer"
+    }
+    }<br>
+    <h4>
+        Display all user Details
+    </h4>
+    <p>
+        On GET request to /api/users/ route admin will get access to all users details but it will be limited to few
+        fields like Name,Email,Description.<br>
+        Response:<br>
+        {
+        "status": "success",
+        "limit": 10,
+        "data": [
+        {
+        "_id": "601c0ab1adb6ab1fc435e3a5",
+        "name": "Deril",
+        "email": "derilquadras@gmail.com",
+        "description": "i am a mean stack developer"
+        },
+        {
+        "_id": "601e20067b3f0462404feef8",
+        "name": "Anky",
+        "email": "anki@gmail.com",
+        "description": "i am a mean stack developer"
+        },
+        ],
+        "currentPage": "1",
+        "count": 10
+        }<br>
+        **only admin has access to this route
+    <h4>
+        Display One user
+    </h4>
+    <p>
+        On GET request to /api/users/:id route admin will get access to one users details whose id is passed as query
+        parameter.<br>
+        Add a query id parameter to the request which is the id of the user whose details are to be retrieved.<br>
+        Response:<br>
+        {
+        "status": "success",
+        "data": [
+        {
+        "skills": [
+        "nodejs angularjs reactjs vuejs"
+        ],
+        "role": "user",
+        "_id": "601c0ab1adb6ab1fc435e3a5",
+        "name": "Deril",
+        "email": "derilquadras@gmail.com",
+        "password": "$2a$10$rsivMuj.bZcJ9YS0wts0kuihNEh/yqYs7984VWpUVWwL8aIKQkh3C",
+        "profilePicture": "uploads\\2021-02-04T14-54:41.522Z",
+        "phoneNumber": 900000,
+        "description": "i am a mean stack developer",
+        "__v": 0
+        }
+        ]
+        }<br>
+        **only admin has access to this route
+    <h4>
+        Search a user
+    </h4>
+    <p>
+        On GET request to /api/users/search route admin will get access to one users details whose name is passed as
+        parameter.<br>
+        Add a name as parameter to the request which is the name of the user whose details are to be retrieved.<br>
+        Response:<br>
+        {
+        "data": [
+        {
+        "skills": [
+        "nodejs "
+        ],
+        "role": "user",
+        "_id": "601e271bdf97d33498debd2f",
+        "name": "Deril",
+        "email": "derilquadras1@gmail.com",
+        "password": "$2a$10$JJRZLZw0uPB05C05.Z0nSuLA/0NndMtuY7DglFNvf8vacqIPUCUQO",
+        "profilePicture": "uploads\\2021-02-06T05-20:27.419Z",
+        "phoneNumber": 900000,
+        "description": "i am a mean stack developer",
+        "__v": 0
+        },
+        ]
+        }<br>
+        **only admin has access to this route
+    <h4>
+        Deleting a User
+    </h4>
+    <p>
+        On DELETE request to /api/users/deactivate/:id route admin will get access to deactivate a user whose id is
+        passed as a query parameter value
+        Add a query id parameter to the request which is the id of a user which admin wants to deactivate account
+        of.<br>
+        Response:<br>
+        {
+        status: "success",
+        data: null,
+        message:"Deactivated Successfully"
+        }<br>
+        **only admin has access to this route
+    <h4>Admin section</h4>
+    <p>The admin should be able to manage his users in this section. So he should have access to a table of users.</p>
+</body>
+
+</html>

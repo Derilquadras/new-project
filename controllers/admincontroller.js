@@ -119,6 +119,7 @@ exports.deactivate = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: null,
+      message:"Deactivated Successfully"
     });
   } catch (error) {
     res.status(400).send({ message: err });

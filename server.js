@@ -26,6 +26,10 @@ const userRoutes = require("./routes/userRoutes");
 app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRoutes);
 
+
+app.get("/",(req,res)=>{
+  res.render('index',{title:'Home page'});
+});
 app.use((req, res) => {
   res.status(404).send({ url: req.originalUrl + " not found" });
 });
