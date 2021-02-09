@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const database = process.env.MONGODB_URL;
+const database = "mongodb://localhost/newDB" ||process.env.MONGODB_URL;
 
 const option = {
   useNewUrlParser: true,

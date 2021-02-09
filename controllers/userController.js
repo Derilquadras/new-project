@@ -13,11 +13,11 @@ const {
  */
 exports.Register = async (req, res) => {
   const { error } = registerValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({message:error.details[0].message});
 
   //if User exist
   const userExist = await UserSchema.findOne({ email: req.body.email });
-  if (userExist) return res.status(400).send("Email already exists");
+  if (userExist) return res.status(400).json({message:"Email or password is wrong"});
 
   //hash the password
   const salt = await bcrypt.genSalt(10);
@@ -49,15 +49,15 @@ exports.Register = async (req, res) => {
  */
 exports.Login = async (req, res) => {
   const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({message:error.details[0].message});
 
   //if User doesnt exist
   const user = await UserSchema.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("Email or password is wrong");
+  if (!user) return res.status(400).json({message:"Email or password is wrong"});
 
   //password is correct
   const validPass = await bcrypt.compare(req.body.password, user.password);
-  if (!validPass) return res.status(400).send("Email or password is wrong");
+  if (!validPass) return res.status(400).json({message:"Email or password is wrong"});
 
   //create and assign a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {

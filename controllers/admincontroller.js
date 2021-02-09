@@ -40,10 +40,10 @@ exports.getOne = async (req, res) => {
   try {
     const user = await UserSchema.find({ _id: req.params.id });
     if (user.length == 0)
-      return res.status(400).send({ message: "Object not found" });
+      return res.status(400).json({ message: "Object not found" });
     res.status(200).json({ status: "success", data: user });
   } catch (err) {
-    res.status(400).send({ message: err });
+    res.status(400).json({ message: err });
   }
 };
 /**
@@ -54,11 +54,11 @@ exports.getOne = async (req, res) => {
  */
 exports.createOne = async (req, res) => {
   const { error } = registerValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({message:error.details[0].message})
 
   //if User exist
   const userExist = await UserSchema.findOne({ email: req.body.email });
-  if (userExist) return res.status(400).send("Email already exists");
+  if (userExist) return res.status(400).json({message:"Email already exists"});
 
   //hash the password
   const salt = await bcrypt.genSalt(10);
@@ -78,7 +78,7 @@ exports.createOne = async (req, res) => {
     user.password = undefined;
     res.status(200).json({ status: "success", user });
   } catch (err) {
-    res.status(400).send({ message: err });
+    res.status(400).json({ message: err });
   }
 };
 /**
@@ -101,7 +101,7 @@ exports.Search = async (req, res) => {
       data: users,
     });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(400).json({ message: err });
   }
 };
 /**
@@ -178,6 +178,6 @@ exports.chartData = async (req, res) => {
     //   sql: sql.length,
     // });
   } catch (error) {
-    console.log(error);
+    res.status(200).json({message:error});
   }
 };
